@@ -1,4 +1,4 @@
-import CardCarrier from './CardCarrier';
+import { CardCarrier } from './CardCarrier';
 import { useState } from 'react';
 import {
   Bars3Icon,
@@ -10,19 +10,18 @@ import {
   UsersIcon,
   FolderIcon,
   CalendarIcon,
-  ArrowRightEndOnRectangleIcon
+  ArrowRightEndOnRectangleIcon,
+  TruckIcon
 } from '@heroicons/react/20/solid';
-
-
 
 const SideNavbar = ({ onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-
+ 
   return (
-    <div className="flex h-screen bg-gray-50 w-full">
+    <div className="flex bg-gray-50 w-full h-screen fixed top-0 left-0">
       {/* Sidebar */}
-      <div className={`${sidebarCollapsed ? 'w-20' : 'w-64'} bg-white border-r border-gray-200 transition-all duration-300 flex-shrink-0`}>
+      <div className={`${sidebarCollapsed ? 'w-20' : 'w-55'} bg-white border-r border-gray-200 transition-all duration-300 flex-shrink-0`}>
 
         <div className="p-4 flex items-center justify-between">
           {!sidebarCollapsed && (
@@ -32,7 +31,7 @@ const SideNavbar = ({ onLogout }) => {
                 src="https://randomuser.me/api/portraits/men/1.jpg"
                 alt="User"
               />
-              {!sidebarCollapsed && <span className="ml-3 text-sm font-medium text-gray-700">Usuario</span>}
+              {!sidebarCollapsed && <span className="ml-3 text-sm font-medium text-gray-700">Víctor Alfredo Albornoz</span>}
             </div>
           )}
           <button
@@ -53,6 +52,7 @@ const SideNavbar = ({ onLogout }) => {
             { name: 'Equipo', icon: <UsersIcon className="h-5 w-10" />, current: false },
             { name: 'Proyectos', icon: <FolderIcon className="h-5 w-10" />, current: false },
             { name: 'Calendario', icon: <CalendarIcon className="h-5 w-10" />, current: false },
+            { name: 'Seguimiento', icon: <TruckIcon className="h-5 w-10" />, current: false },
           ].map((item) => (
             <a
               key={item.name}
@@ -64,8 +64,8 @@ const SideNavbar = ({ onLogout }) => {
               {!sidebarCollapsed && item.name}
             </a>
           ))}
-          {/* Company Name at bottom left of sidebar */}
-          <div className="mt-auto p-4 py-60">
+          {/* Nombre de la empresa Albornoz en menú lateral */}
+          <div className="mt-auto p-4 py-150">
             {sidebarCollapsed ? (
               <div className="flex justify-center h-10">
                 <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
@@ -73,15 +73,14 @@ const SideNavbar = ({ onLogout }) => {
                 </div>
               </div>
             ) : (
-              <div className="text-sm font-medium text-gray-700 pl-4">Transportes Albornoz</div>
+              <div className="text-sm font-medium text-gray-700 pl-5 fixed bottom-10">Transportes Albornoz</div>
             )}
           </div>
         </nav>
 
       </div>
 
-
-      {/* Main Content */}
+      {/* Contenido del menú */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Header */}
         <header className="bg-white shadow-sm">
@@ -99,6 +98,7 @@ const SideNavbar = ({ onLogout }) => {
                 />
               </div>
             </div>
+            
 
             <div className="flex items-center">
               <button className="p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
@@ -139,9 +139,66 @@ const SideNavbar = ({ onLogout }) => {
           </div>
         </header>
 
-        {/* Page Content */}
-        <main className="flex-1 overflow-y-auto p-4">
-          {/* Contenido principal aquí */}
+        {/* Contenido de la Card del Transportista */}
+        <main className="flex-1 overflow-y-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 p-4">
+            <CardCarrier carrier={{
+              name: "Juan Pérez",
+              company: "Transportes Albornoz",
+              status: "active",
+              phone: "+569-12345678",
+              email: "jperez@albornoz.cl",
+              location: "Santiago, Chile",
+              hours: "Lun-Vie 8:00-18:00",
+              vehicle: {
+                type: "Camión 3/4",
+                plate: "AB123CD",
+                capacity: "1.500 kg"
+              }
+            }} />
+            <CardCarrier carrier={{
+              name: "María González",
+              company: "Transportes Albornoz",
+              status: "active",
+              phone: "+569-87654321",
+              email: "mgonzales@albornoz.cl",
+              location: "Valparaíso, Chile",
+              hours: "Lun-Vie 9:00-17:00",
+              vehicle: {
+                type: "Camión 3/4",
+                plate: "EF456GH",
+                capacity: "1.500 kg"
+              }
+            }} />
+            <CardCarrier carrier={{
+              name: "Carlos Rojas",
+              company: "Transportes Albornoz",
+              status: "inactivo",
+              phone: "+569-11223344",
+              email: "crojas@albornoz.cl",
+              location: "Concepción, Chile",
+              hours: "Lun-Vie 7:00-19:00",
+              vehicle: {
+                type: "Camión 3/4",
+                plate: "IJ789KL",
+                capacity: "1.500 kg"
+              }
+            }} />
+            <CardCarrier carrier={{
+              name: "Federick González",
+              company: "Transportes Albornoz",
+              status: "inactivo",
+              phone: "+569-88456677",
+              email: "fgonzalez@albornoz.cl",
+              location: "Chillan, Chile",
+              hours: "Lun-Vie 8:00-17:00",
+              vehicle: {
+                type: "Camión 3/4",
+                plate: "EF456GH",
+                capacity: "1.500 kg"
+              }
+            }} />
+          </div>
         </main>
       </div>
     </div>

@@ -46,7 +46,7 @@ function App() {
             
             <main className="flex-1 overflow-y-auto p-4">
               <div className="max-w-7xl mx-auto">
-                {/* Main content will go here */}
+                {/* Contenido del menú aquí */}
               </div>
             </main>
           </div>
@@ -56,9 +56,13 @@ function App() {
           <div className="w-full max-w-md">
             <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl overflow-hidden">
               <div className="p-8">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white text-center mb-6">
+                <h1 className="text-3xl font-bold text-gray-700 dark:text-white text-center mb-6">
+                  Transportes Albornoz
+                </h1>
+                
+                <h5 className="text-2xl font-bold text-gray-600 dark:text-white text-center mb-6">
                   Iniciar sesión
-                </h2>
+                </h5>
                 <form onSubmit={handleSubmit}>
                   <div className="mb-4">
                     <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2" htmlFor="email">

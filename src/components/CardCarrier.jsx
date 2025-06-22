@@ -10,40 +10,18 @@ import {
   ExclamationCircleIcon
 } from '@heroicons/react/20/solid';
 import RouteAssignmentModal from './RouteAssignmentModal';
-import L from 'leaflet';
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
-
-
-
-// Crear iconos personalizados
-const originIcon = L.icon({
-  iconUrl: 'https://cdn-icons-png.flaticon.com/512/535/535137.png', // Ubicación
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-  popupAnchor: [0, -32]
-});
-
-const destinationIcon = L.icon({
-  iconUrl: 'https://cdn-icons-png.flaticon.com/512/4399/4399322.png', // Localización
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-  popupAnchor: [0, -32]
-});
-
-const vehicleIcon = L.icon({
-  iconUrl: 'https://cdn-icons-png.flaticon.com/512/17411/17411340.png', // Camión de mudanzas
-  iconSize: [42, 42],
-  iconAnchor: [21, 42],
-  popupAnchor: [0, -42]
-});
+import Map from './Map'; 
 
 export const CardCarrier = ({ carrier }) => {
 
+  const [showMap, setShowMap] = useState(false);
   const [showRouteModal, setShowRouteModal] = useState(false);
+
+  const toggleMap = () => setShowMap(!showMap);
 
   const handleAssignRoute = (route) => {
     console.log('Ruta asignada:', route);
-    // Aquí puedes hacer algo con la ruta asignada, como actualizar la base de datos
+    // Actualizar la base de datos si tuvieramos
   };
 
   return (
@@ -54,8 +32,7 @@ export const CardCarrier = ({ carrier }) => {
           onAssign={handleAssignRoute}
         />
       )}
-
-
+      
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
         {/* Header */}
         <div className="bg-gray-50 px-4 py-3 border-b border-gray-200 flex justify-between items-center">
@@ -133,68 +110,13 @@ export const CardCarrier = ({ carrier }) => {
             </div>
           </div>
         </div>
-        {/* Mapa de ruta */}
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <h4 className="text-xs font-medium text-gray-500 uppercase tracking-wider mb-3 pl-4">
-            Ruta Actual
-            </h4>
-          <div className="relative h-56 rounded-lg overflow-hidden border border-gray-200 bg-gray-50">
-            {/* Componente de Mapa - React Leaflet */}
-            <div className="absolute inset-0">
-              <MapContainer
-                center={[-12.0464, -77.0428]}
-                zoom={13}
-                scrollWheelZoom={false}
-                className="h-full w-full"
-              >
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <Marker position={[-12.0564, -77.0228]} icon={originIcon}>
-                  <Popup>Punto de llegada</Popup>
-                </Marker>
-                <Marker position={[-12.0364, -77.0628]} icon={destinationIcon}>
-                  <Popup>Punto de partida</Popup>
-                </Marker>
-                <Polyline
-                  positions={[
-                    [-12.0564, -77.0228],
-                    [-12.0464, -77.0428],
-                    [-12.0364, -77.0628]
-                  ]}
-                  color="#3B82F6"
-                />
-                <Marker position={[-12.0464, -77.0428]} icon={vehicleIcon}>
-                  <Popup>
-                    <div className="font-medium">
-                      <p>{carrier.name}</p>
-                      <p className="text-blue-600">En ruta (45%)</p>
-                    </div>
-                  </Popup>
-                </Marker>
-              </MapContainer>
-            </div>
+
+        {/* Mapa que se muestra solo cuando showMap es true */}
+        {showMap && (
+          <div className="mt-4">
+            <Map />
           </div>
-
-          {/* Leyenda del mapa */}
-          <div className="mt-3 grid grid-cols-3 gap-2 text-xs text-gray-600 pl-6">
-            <div className="flex items-center">
-              <div className="w-3 h-3 bg-green-500 rounded-full mr-1"></div>
-              Origen
-            </div>
-            <div className="flex items-center">
-              <div className="w-3 h-3 bg-blue-500 rounded-full mr-1"></div>
-              Vehículo
-            </div>
-            <div className="flex items-center">
-              <div className="w-3 h-3 bg-red-500 rounded-full mr-1"></div>
-              Destino
-            </div>
-          </div>
-        </div>
-
-
+        )}
 
         {/* Footer */}
         <div className="mt-1 flex justify-between items-center bg-gray-50 px-4 py-3 border-t border-gray-200">
@@ -207,9 +129,12 @@ export const CardCarrier = ({ carrier }) => {
             <RouteAssignmentModal
             show={showRouteModal}
             onClose={() => setShowRouteModal(false)} />
-            <button className="text-sm font-medium text-blue-600 hover:text-indigo-400">
-              Ver recorrido
+           <button
+              onClick={toggleMap}
+              className="text-sm font-medium text-blue-600 hover:text-indigo-400">
+              {showMap ? 'Ocultar' : 'Ver ubicación'}
             </button>
+           
         </div>
       </div>
     </>
